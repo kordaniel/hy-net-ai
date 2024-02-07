@@ -1,0 +1,14 @@
+# Defines the required environment variables for Oakestra.
+# Load with: $ source envs-set
+
+export CLUSTER_NAME=Group1-Cluster
+export CLUSTER_LOCATION=60.2051,24.9623,10000
+
+export SYSTEM_MANAGER_URL=$(ip -oneline -4 addr | grep wlp|tr -s ' '|cut -d ' ' -f4|cut -d '/' -f1)
+#export SYSTEM_MANAGER_URL=$(ip -oneline -4 addr | grep enp|tr -s ' '|cut -d ' ' -f4|cut -d '/' -f1)
+
+echo "Defined the following environment variables:"
+echo "CLUSTER_NAME=${CLUSTER_NAME}"
+echo "CLUSTER_LOCATION=${CLUSTER_LOCATION}"
+echo "SYSTEM_MANAGER_URL=${SYSTEM_MANAGER_URL}"
+

@@ -20,3 +20,15 @@ foo@bar:$ git pull --recurse-submodules
 foo@bar:$ cd oakestra
 foo@bar: oakestra$ git submodule update --remote --recursive --init
 ```
+
+## Run Oakestra
+First set the required environment variables. This can be done by sourcing the `envs-set` file. Do note that it might not work on all machines, depending on the network stack and how it's configured.
+```console
+foo@bar:$ source envs-set
+foo@bar:$ cd oakestra
+foo@bar:oakestra$ docker compose -f run-a-cluster/1-DOC.yaml -f run-a-cluster/override-alpha-versions.yaml up
+```
+After stopping the system you can clear the environment variables with
+```console
+foo@bar:$ source envs-unset
+```
