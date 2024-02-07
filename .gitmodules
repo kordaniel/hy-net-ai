@@ -1,0 +1,4 @@
+[submodule "oakestra"]
+	path = oakestra
+	url = git@github.com:oakestra/oakestra.git
+	branch = develop
