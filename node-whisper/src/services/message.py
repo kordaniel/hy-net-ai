@@ -1,5 +1,6 @@
 import io
 import json
+import logging
 import selectors
 import socket
 import struct
@@ -64,19 +65,16 @@ class Message:
                 self.__process_message()
 
     def close(self) -> None:
-        print(f"Closing connection to {self.__addr}")
+        logging.info(f"Closing connection to {self.__addr}")
         try:
             self.__selector.unregister(self.__sock)
         except Exception as e:
-            print(
-                f"Error: selector.unregister() exception for "
-                f"{self.__addr}: {e!r}"
-            )
+            logging.warning(f"Error: selector.unregister() exception for {self.__addr}: {e!r}")
 
         try:
             self.__sock.close()
         except OSError as e:
-            print(f"Error: socket.close() exception for {self.__addr}: {e!r}")
+            logging.warning(f"Error: socket.close() exception for {self.__addr}: {e!r}")
         finally:
             self.__sock = None # Delete reference to socket object for garbage collection
 
@@ -107,14 +105,14 @@ class Message:
         if self.__jsonheader["content-type"] in ("binary/flac", ): # TODO: Add other encodings than flac
             encoding = self.__jsonheader["content-encoding"]
             self.__binary_stream = data
-            print("Buffered", len(self.__binary_stream), "bytes of", self.__jsonheader["content-type"], "data")
+            logging.debug(f"Buffered {len(self.__binary_stream)} bytes of {self.__jsonheader['content-type']} data")
             self.__append_to_queue_cb((encoding, self.__binary_stream))
         else:
-            print(
-                f"Received not supported {self.__jsonheader['content-type']} message",
-                "from {self.addr} encoded as {self.__jsonheader['content-encoding']}",
+            logging.info((
+                f"Received not supported {self.__jsonheader['content-type']} message "
+                f"from {self.addr}, encoded as {self.__jsonheader['content-encoding']}"
                 "\nIgnoring message.."
-            )
+            ))
             self.__binary_stream = data
 
         self.close()

@@ -24,6 +24,15 @@ Select model to use with the `-m <model>` flag.
 ```console
 foo@bar:node-whisper$ source env/bin/activate
 (env) foo@bar:node-whisper/src$ python main.py -h
+usage: main.py [-h] [-lv] [-m <tiny|small|medium|...>]
+
+Node-Whisper
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -lv, --log-verbose    Enable verbose logging
+  -m <tiny|small|medium|...>, --model <tiny|small|medium|...>
+                        Whisper model to load
 (env) foo@bar:node-whisper/src$ python main.py -m tiny|small|medium|<specify_model>
 (env) foo@bar:node-whisper/src$ deactivate
 ```
