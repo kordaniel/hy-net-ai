@@ -69,12 +69,6 @@ class Whisper(threading.Thread):
         result = whisper.decode(model, mel, options)
         t2 = time.time()
         logging.debug(f"Transcription completed, in {t2-t1} seconds.")
-        ##Begin:print Translation, This must be usless, remove it after investging reasons
-        try:
-            print(result.text)
-        except:
-            print("couldn't translate (Debug)")
-        ##End
 
         return True, result.text
 
