@@ -64,7 +64,8 @@ class Whisper(threading.Thread):
         t2 = time.time()
         logging.info(f"Detected language: '{max(probs, key=probs.get)}', in {t2-t1} seconds.")
         t1 = time.time()
-        options = whisper.DecodingOptions()
+        # Transcribe with translation
+        options = whisper.DecodingOptions(task="translate")
         result = whisper.decode(model, mel, options)
         t2 = time.time()
         logging.debug(f"Transcription completed, in {t2-t1} seconds.")
