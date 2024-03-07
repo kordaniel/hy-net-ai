@@ -7,7 +7,7 @@ All data must be encoded in binary form, consisting of a stream with the followi
  - JSON-header: Description of the content, must contain the fields { byteorder, content-length, content-type, content-encoding }
  - Content: The actual bytes of the audio signal to be processed
 
-See the implementation of [node-client](https://github.com/kordaniel/hy-net-ai/tree/main/node-whisper) for a more detailed example. Currently only FLAC encoded bytestreams are supported by the whisper node.
+See the implementation of [node-client](https://github.com/kordaniel/hy-net-ai/tree/main/node-client) for a more detailed example. Currently only FLAC encoded bytestreams are supported by the whisper node.
 
 ## Setup
 ### Initial steps
@@ -40,7 +40,8 @@ optional arguments:
 ```
 
 ### Docker container
-Loads the tiny model as the default one, selection of model is not implemented, but if you wish to use an another model you can modify the Dockerfile
+Loads the tiny model as the default one, selection of model is not implemented. If you wish to use an another model you can update the Dockerfile CMD statement with the desired model.
+
 ```console
 foo@bar:node-whisper$ docker build -t node-whisper .
 foo@bar:node-whisper$ docker run -p 56789:56789/tcp -it node-whisper
