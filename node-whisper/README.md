@@ -5,8 +5,9 @@ A worker node to be deployed in a cluster at the edge of the cloud. Loads the Op
 All data must be encoded in binary form, consisting of a stream with the following parts:
  - fixed 2-byte unsigned short (integer) in network byte order, specifying the length of the JSON-header in bytes
  - JSON-header: Description of the content, must contain the fields { byteorder, content-length, content-type, content-encoding }
- - Content: Bytes of a audiosignal, for example a encoded flac file.
-See the testing script `client.py` for a simple example.
+ - Content: The actual bytes of the audio signal to be processed
+
+See the implementation of [node-client](https://github.com/kordaniel/hy-net-ai/tree/main/node-whisper) for a more detailed example. Currently only FLAC encoded bytestreams are supported by the whisper node.
 
 ## Setup
 ### Initial steps
@@ -15,7 +16,7 @@ foo@bar:node-whisper$ python3 -m venv env
 foo@bar:node-whisper$ source env/bin/activate
 (env) foo@bar:node-whisper$ pip install -U openai-whisper
 (env) foo@bar:node-whisper$ pip freeze > requirements.txt
-(env) foo@bar:node-whisper$ python main.py
+(env) foo@bar:node-whisper$ python src/main.py
 (env) foo@bar:node-whisper$ deactivate
 
 ```
@@ -23,6 +24,7 @@ foo@bar:node-whisper$ source env/bin/activate
 Select model to use with the `-m <model>` flag.
 ```console
 foo@bar:node-whisper$ source env/bin/activate
+(env) foo@bar:node-whisper$ cd src
 (env) foo@bar:node-whisper/src$ python main.py -h
 usage: main.py [-h] [-lv] [-m <tiny|small|medium|...>]
 
@@ -38,14 +40,11 @@ optional arguments:
 ```
 
 ### Docker container
-Loads the tiny model as the default one, selection of model is not implemented.
+Loads the tiny model as the default one, selection of model is not implemented, but if you wish to use an another model you can modify the Dockerfile
 ```console
 foo@bar:node-whisper$ docker build -t node-whisper .
 foo@bar:node-whisper$ docker run -p 56789:56789/tcp -it node-whisper
 ```
 
-### Send audio for transcription
-A very simple testing script that demonstrates the functionality of the system. Loads the bytes from the audiofile passed as the only argument, creates needed headers and opens a connection to the whisper-node and sends the message to be processed.
-```console
-foo@bar:node-whisper$ python3 client.py /my/collection/flacs/speech.flac
-```
+### Send audio for transcription/translation
+You can use the example [node-client](https://github.com/kordaniel/hy-net-ai/tree/main/node-whisper) application to test the system. Follow the instructions in it's README.md and talk in any language to send speech for the node-whisper to translate and/or transcribe
