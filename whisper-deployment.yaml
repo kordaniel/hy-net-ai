@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: whisper-deployment
+  labels:
+    app: whisper
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: whisper
+  template:
+    metadata:
+      labels:
+        app: whisper
+    spec:
+      containers:
+      - name: whisper
+        image: ssquare/group1-netai:1.0.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 5200
